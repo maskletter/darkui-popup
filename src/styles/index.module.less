@@ -1,0 +1,220 @@
+@layer-direction: left, right, top, bottom, center;
+
+.af-modal * {
+  position: relative;
+}
+.af-modal-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.7);
+  animation: bg-animate 0.3s ease;
+  animation-fill-mode: forwards;
+
+}
+.af-modal-bg:global(.leave) {
+  animation: bg-animate-leave 0.3s;
+  animation-fill-mode: forwards;
+}
+.af-modal-bg:global(.empty) {
+  animation: none !important;
+  background-color: transparent;
+}
+
+.af-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+
+  each(@layer-direction, {
+  &.layer-@{value} {
+    display: flex;
+
+    & > div {
+      animation-duration: .3s;
+      animation-timing-function: linear;
+    }
+  }
+}
+
+) &.layer-center {
+    align-items: center;
+    justify-content: center;
+
+    // &>div.default-animate {
+    //   animation-name: layer-center-animate;
+    // }
+  }
+
+  &.layer-bottom {
+    align-items: flex-end;
+    justify-content: center;
+
+    &>div {
+      width: 100%;
+    }
+
+    // &>div.default-animate {
+    //   animation-name: layer-bottom-animate;
+    // }
+  }
+
+  &.layer-top {
+    align-items: flex-start;
+    justify-content: center;
+
+    &>div {
+      width: 100%;
+    }
+
+    // &>div.default-animate {
+    //   animation-name: layer-top-animate;
+    // }
+  }
+
+  &.layer-left {
+    justify-content: flex-start;
+
+    &>div {
+      height: 100%;
+    }
+
+    // &>div.default-animate {
+    //   animation-name: layer-left-animate;
+    // }
+  }
+
+  &.layer-right {
+    justify-content: flex-end;
+
+    &>div {
+      height: 100%;
+    }
+
+    // &>div.default-animate {
+    //   animation-name: layer-right-animate;
+    // }
+  }
+
+}
+
+@keyframes layer-center-animate {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes layer-center-animate-level {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes layer-left-animate {
+  0% {
+    transform: translate(-100%, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes layer-left-animate-level {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
+
+@keyframes layer-right-animate {
+  0% {
+    transform: translate(100%, 0);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes layer-right-animate-level {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(100%, 0);
+  }
+}
+
+@keyframes layer-top-animate {
+  0% {
+    transform: translate(0, -100%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes layer-top-animate-level {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, -100%);
+  }
+}
+
+@keyframes layer-bottom-animate {
+  0% {
+    transform: translate(0, 100%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes layer-bottom-animate-level {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 100%);
+  }
+}
+@keyframes bg-animate {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes bg-animate-leave {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
