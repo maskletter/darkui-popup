@@ -1,11 +1,15 @@
 {
-  "name": "@maui/popup",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@darkui/popup",
+  "private": false,
+  "version": "0.0.1",
   "type": "module",
   "files": ["dist", "es"],
   "main": "./dist/index.js",
   "module": "./es/index.js",
+  "author": {
+    "name": "xiaofu",
+    "email": "maskletter@outlook.com"
+  },
   "exports": {
     ".": {
       "import": "./es/index.js",
@@ -15,6 +19,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:umd": "tsc && vite build --umd",
     "preview": "vite preview"
   },
   "dependencies": {

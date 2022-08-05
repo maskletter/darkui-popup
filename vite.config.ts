@@ -40,13 +40,22 @@ export default defineConfig({
           //配置打包根目录
           dir: 'dist',
           preserveModulesRoot: 'src'
-        }
+        },
+        // {
+        //   format: 'umd',
+        //   file: 'umd/index.js',
+        //   name: 'popup',
+        //   inlineDynamicImports: true,
+        //   dir: undefined,
+        // },
       ]
     },
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      formats: ['es', 'cjs']
-    }
+      formats: ['cjs', 'es'],
+      // // fileName: 'index',
+      // name: 'popup',
+    },
   },
   server: {
     host: '0.0.0.0'
