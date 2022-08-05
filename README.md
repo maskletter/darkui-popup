@@ -566,4 +566,21 @@ function createVueShow() {
 }
 ```
 
-
+### CreateRoot
+`CreateRoot`作为一个中转站，处理了不同ui 之前变量以及事件名各不相同的弊端，通过传入当前ui的变量名称，内部会进行重新调整，以保证符合`Popup`的运行
+以下为`CreateRoot`所接受的参数
+```ts | pure
+export interface ShowPopupProps {
+  format?: (props: any) => any;
+  controller?: ShowController;
+  onDestory?: () => void;
+  component?: ReactElement<any, any>;
+  cancelEventName?: string;
+  destoryEventName?: string;
+  visibilityName?: string;
+  other?: any;
+}
+const Root = CreateRoot(props: ShowPopupProps);
+const controller = new ShowController(Root);
+```
+当前项目中暂时只有react以及vue3版本，其他版本会在后续中补充
