@@ -14,7 +14,7 @@
 ```tsx
 import React, { useState } from 'react';
 
-import { Popup } from '../popup';
+import { Popup } from '@darkui/popup';
 
 export default () => {
 
@@ -216,18 +216,20 @@ animate.css地址<a href="https://animate.style/" target="_blank">https://animat
 
 ## Show 命令式 基础使用
 
+`Show`方法返回一个promise对象，promise的值为instance
+
 `Show`与常规弹窗不同，当通过此方法打开一个弹窗之后，如果再次调用`Show`方法，默认情况下第一个弹窗会缓存下来<br />当关闭第二个弹窗时候，会从新打开第一个弹窗，这不是一个`Bug`，可以通过传递`replace`为`true`来阻止此特征，或者第二个弹窗关闭时候调用`interface.closeAll()`
 
 ```tsx
 /* eslint-disable */
 import React from 'react';
 
-import { Show } from '../index';
+import { Show } from '@darkui/popup';
 
 export default () => {
 
-  const popup1 = (direction?: any) => {
-    const instance = Show({
+  const popup1 = async (direction?: any) => {
+    const instance = await Show({
       direction,
       content: () => <h1 style={{color:'#666'}}>测试1-content</h1>,
       onCancel() {
@@ -266,16 +268,17 @@ function createPopup(text: string) {
     });
 }
 const instanceList = [];
-instanceList.push(createPopup('第一个弹窗'));
-setTimeout(() => {
-  instanceList.push(createPopup('第二个弹窗'));
+instanceList.push(await createPopup('第一个弹窗'));
+setTimeout(async () => {
+  instanceList.push(await createPopup('第二个弹窗'));
 }, 1000)
-setTimeout(() => {
+setTimeout(async () => {
   instanceList[1].close();
   // 此时弹窗3关闭时候，会返回到第一个弹窗
-  instanceList.push(createPopup('第三个弹窗'));
+  instanceList.push(await createPopup('第三个弹窗'));
 }, 2000)
 ```
+关于instance的属性如下
 ```ts
 export interface AlterInstance {
   /** 当前弹窗的key */
@@ -306,7 +309,7 @@ interface Options {
 const controller = new ShowController();
 Show({
 
-}, { controller )
+}, { controller })
 ```
 `Options.keep`表示是否后续的弹窗都运行在传日的控制器当中
 
@@ -335,12 +338,20 @@ Show基本参数与Popup保持一致,但是不包含onConfirm/visibility
     <td>N</td>
     <td>false</td>
   </tr>
+  <tr>
+    <td>content</td>
+    <td>需要显示的内容</td>
+    <td>JSX.Element</td>
+    <td>Y</td>
+    <td>--</td>
+  </tr>
 </table>
 
 ## Queue 队列 
 队列形式，是基于`Show`的二次封装，通过传入多个参数形式，管理展示弹窗<br /><br />
+适用于复杂弹窗队列显示，每个弹窗都可以获取到前面所有抛出的内容信息
 ```tsx
-import { getQueueInfo, Queue } from '../../queue';
+import { getQueueInfo, Queue } from '@darkui/popup';
 Queue([
       {
         options: {
@@ -428,6 +439,7 @@ interface QueueItem {
    */
   render: RenderFn;
 }
+```
 ### useQueueInfo
 在使用`Popup.queue`时候，`Popup.queue`对外抛出了一个`useQueueInfo`的钩子，通过`useQueueInfo`可以获取到当前弹窗的实例，以及上一个弹窗所返回的内容，同时可以指定传给下一个弹窗的内容<br /><br />
 `useQueueInfo`并非完全意义上的react hook，它也可以被用在options的onCancel中<br>

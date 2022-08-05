@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { PopupAlterInterface } from '../type';
 import ShowControllerCore from './core';
 import { CreateRoot } from './react';
+export { CreateRoot as CreateRootVue3 } from './vue3'
 
 // 这种形式会失去编译时候的tree shaking功能，暂时禁用
 // declare module '../popup' {
