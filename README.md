@@ -9,6 +9,8 @@
 * 提供toast/dialog/actionSheet，ui组件
 * 提供核心api，自定义拓展任意框架/ui 弹窗组件的Show/Queue功能
 
+## 中文文档
+[$ 中文文档](https://maskletter.github.io/darkui-popup-doc/dist/)
 
 ## 快速安装
 ```shell
