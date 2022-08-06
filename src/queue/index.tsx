@@ -2,7 +2,7 @@ import { PopupAlterInterface } from '../type';
 import { ShowController } from '../show';
 import { CreateRoot } from '../show/react';
 import { randomKey } from '../shared';
-import ShowControllerCore from '../show/core';
+import { ShowControllerCore } from '../show/core';
 
 // declare module '../popup' {
 //   namespace Popup {

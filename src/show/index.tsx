@@ -2,8 +2,8 @@ import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { PopupAlterInterface } from '../type';
-import ShowControllerCore from './core';
-import { CreateRoot } from './react';
+import { ShowControllerCore } from './core';
+import { CreateRoot as CreateRootReact } from './react';
 export { CreateRoot as CreateRootVue3 } from './vue3'
 
 // 这种形式会失去编译时候的tree shaking功能，暂时禁用
@@ -36,7 +36,7 @@ class ShowController extends ShowControllerCore {
     }
   }
   createRoot() {
-    const Root = this.Root || CreateRoot();
+    const Root = this.Root || CreateRootReact();
     if (isReactVersion18) {
         const root = createRoot(this.$el);
         root.render(
@@ -129,7 +129,6 @@ export function createShow<T = PopupAlterInterface>(
     return _props.replace ? _controller.replace(_props as any) : _controller.append(_props as any);
   };
 }
-const Show = createShow(CreateRoot(), undefined, { destory: false });
+const Show = createShow(CreateRootReact(), undefined, { destory: false });
 
-export { ShowController };
-export { Show };
+export { ShowController, Show, CreateRootReact, ShowControllerCore };

@@ -146,7 +146,7 @@ function Popup(_props: PopupInterface) {
       </div>
     ) : null,
     document.body,
-  );
+  ) as any;
 }
 
 function formatDuration(duration?: number) {

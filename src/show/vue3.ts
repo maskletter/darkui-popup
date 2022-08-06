@@ -1,10 +1,8 @@
+import { h, reactive, Teleport, onBeforeMount, defineComponent, mergeProps } from 'vue'
 import { Instance, ShowPopupProps } from '../type';
-
-declare const Vue: any;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const CreateRoot = (_: ShowPopupProps) => {
-  const { h, reactive, onBeforeMount, mergeProps } = Vue;
   const Component = {
     props: [
       'controller',
@@ -16,12 +14,12 @@ export const CreateRoot = (_: ShowPopupProps) => {
       'component',
     ],
     setup(_props: any) {
-      const props = mergeProps(_props, _);
+      const props: any = mergeProps(_props, _ as any);
       const { controller } = props;
       const data = reactive({
-        content: null,
+        content: null as any,
         visibility: false,
-        instance: null,
+        instance: null as unknown as Instance,
       });
       const update = (_instance: Instance) => {
         // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -33,7 +31,7 @@ export const CreateRoot = (_: ShowPopupProps) => {
       onBeforeMount(() => {
         controller.onWatch.on(update);
         controller.onDestory.on(() => {
-          data.instance = null;
+          data.instance = null as any;
           data.visibility = false;
         });
       });
@@ -41,10 +39,10 @@ export const CreateRoot = (_: ShowPopupProps) => {
         if (!data.instance) {
           return;
         }
-        if (data.instance.props.onCancel) {
-          data.instance.props.onCancel(data.instance);
+        if (data.instance?.props?.onCancel) {
+          data.instance?.props?.onCancel(data.instance);
         } else {
-          data.instance.close();
+          data.instance?.close();
         }
       };
       const events = {
@@ -59,8 +57,9 @@ export const CreateRoot = (_: ShowPopupProps) => {
       return () => {
         const ComProps = { ...data.content };
         delete ComProps?.children;
+        console.log(Com)
         return h(
-          Vue.Teleport,
+          Teleport,
           {
             to: 'body',
           },
@@ -72,7 +71,7 @@ export const CreateRoot = (_: ShowPopupProps) => {
               ...events,
               ...props.other,
             },
-            data.content?.children,
+            (data.content as any)?.children,
           ),
         );
       };

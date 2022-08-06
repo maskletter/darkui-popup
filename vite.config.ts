@@ -10,9 +10,11 @@ export default defineConfig({
   plugins: [
     react(),
     dts({
+      tsConfigFilePath: './tsconfig.json',
       outputDir: "es"
     }),
     dts({
+      tsConfigFilePath: './tsconfig.json',
       outputDir: "dist"
     }),
   ],
@@ -20,7 +22,7 @@ export default defineConfig({
     target: 'modules',
     minify: false,
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'vue'],
       output: [
         {
           format: 'es',

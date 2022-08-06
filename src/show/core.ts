@@ -34,7 +34,6 @@ abstract class ShowControllerCore {
     const instance = this.createInstance(props);
     const length = this.lists.push(instance);
     this.onWatch.emit(this.lists[length - 1]);
-    console.log('追加')
     return instance;
   }
   replace(props: PopupAlterInterface) {
@@ -60,8 +59,8 @@ abstract class ShowControllerCore {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   destory() {
     this.unmount && this.unmount();
-    // this.isDestory = true;
-    // (this as any).$el = null;
+    this.isDestory = true;
+    (this as any).$el = null;
   }
   // eslint-disable-next-line @typescript-eslint/member-ordering
   closeAll() {
@@ -104,7 +103,7 @@ abstract class ShowControllerCore {
     componentProps.childrenKey = key;
     return (this.currentInstance = {
       key,
-      controller: this,
+      controller: this as ShowControllerCore,
       close: this.closeTo.bind(this, key),
       closeAll: this.closeAll.bind(this),
       closeTo(instanceKey: string) {
@@ -116,4 +115,3 @@ abstract class ShowControllerCore {
 }
 
 export { ShowControllerCore };
-export default ShowControllerCore;

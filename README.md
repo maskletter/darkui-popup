@@ -10,6 +10,15 @@
 * 提供核心api，自定义拓展任意框架/ui 弹窗组件的Show/Queue功能
 
 
+## 快速安装
+```shell
+npm i @darkui/popup --save
+```
+## 引入样式
+```tsx
+// 引入样式文件
+import "@darkui/popup/es/style.css";
+
 ## 基础模式调用
 ```tsx
 import React, { useState } from 'react';
