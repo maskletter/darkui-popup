@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { createRoot } from 'react-dom/client';
+import { isReactVersion18 } from '../shared';
 import { PopupAlterInterface } from '../type';
 import { ShowControllerCore } from './core';
 import { CreateRoot as CreateRootReact } from './react';
@@ -26,44 +25,57 @@ export { CreateRoot as CreateRootVue3 } from './vue3'
 //   }
 // }
 
-const isReactVersion18 = React.version.substr(0,2) === '18';
+let renderLoader: Function;
+let unmountComponentAtNode: Function;
+// 根据react版本，动态加载挂载方法
+if (isReactVersion18) {
+  import('react-dom/client').then((res) => {
+    renderLoader = res.createRoot
+  })
+} else {
+  import('react-dom').then(res => {
+    renderLoader = res.render;
+    unmountComponentAtNode = res.unmountComponentAtNode;
+  })
+}
+
 class ShowController extends ShowControllerCore {
   unmount() {
-    if (isReactVersion18)  {
-        this.$other.root.unmount();
+    if (isReactVersion18) {
+      this.$other.root.unmount();
     } else {
-        unmountComponentAtNode(this.$el);
+      unmountComponentAtNode(this.$el);
     }
   }
   createRoot() {
     const Root = this.Root || CreateRootReact();
     if (isReactVersion18) {
-        const root = createRoot(this.$el);
-        root.render(
-            <Root
-                controller={this}
-                onDestory={() => {
-                if (this.options.destory !== false) {
-                    this.destory();
-                }
-                }}
-            />
-        );
-        this.$other.root = root;
+      const root = renderLoader(this.$el);
+      root.render(
+        <Root
+          controller={this}
+          onDestory={() => {
+            if (this.options.destory === true) {
+              this.destory();
+            }
+          }}
+        />
+      );
+      this.$other.root = root;
     } else {
-        render(
-            <Root
-                controller={this}
-                onDestory={() => {
-                if (this.options.destory !== false) {
-                    this.destory();
-                }
-                }}
-            />,
-            this.$el,
-        );
+      renderLoader(
+        <Root
+          controller={this}
+          onDestory={() => {
+            if (this.options.destory === true) {
+              this.destory();
+            }
+          }}
+        />,
+        this.$el,
+      );
     }
-    
+
     return this;
   }
 }
@@ -124,8 +136,6 @@ export function createShow<T = PopupAlterInterface>(
       // 将全局控制器赋值给当前调用
       _controller = globalController;
     }
-    // 因为react 18 版本createRoot异步执行导致初始化时未绑定到控制器事件，所以需要微队列等待
-    await Promise.resolve().then();
     return _props.replace ? _controller.replace(_props as any) : _controller.append(_props as any);
   };
 }

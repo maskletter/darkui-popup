@@ -1,7 +1,6 @@
-import { h, reactive, Teleport, onBeforeMount, defineComponent, mergeProps } from 'vue'
+import { h, reactive, Teleport, onBeforeMount, mergeProps } from 'vue'
 import { Instance, ShowPopupProps } from '../type';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const CreateRoot = (_: ShowPopupProps) => {
   const Component = {
     props: [
@@ -22,7 +21,6 @@ export const CreateRoot = (_: ShowPopupProps) => {
         instance: null as unknown as Instance,
       });
       const update = (_instance: Instance) => {
-        // eslint-disable-next-line @typescript-eslint/no-shadow
         const _props: any = props.format ? props.format(_instance.props) : _instance.props;
         data.content = _props as any;
         data.instance = _instance;
@@ -50,14 +48,9 @@ export const CreateRoot = (_: ShowPopupProps) => {
         [props.destoryEventName]: props.onDestory,
       } as any;
       const Com: any = props.component;
-      // console.log(props);
-      if (!Com) {
-        return () => h('h1', {}, ['未加载Component']);
-      }
       return () => {
         const ComProps = { ...data.content };
         delete ComProps?.children;
-        console.log(Com)
         return h(
           Teleport,
           {

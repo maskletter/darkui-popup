@@ -33,6 +33,7 @@ export interface PopupInterface {
   borderRadius?: string | number;
   /** 是否点击穿透背景 */
   pointerEvents?: boolean;
+  className?: string;
   onDestory?: () => void;
   animate?: {
     enter?: Animate;
@@ -56,8 +57,6 @@ export interface PopupAlterInterface
   /** 弹窗的内容 */
   content: string | JSX.Element | JSX.Element[] | FnJsxElement;
   onCancel?: (instance: Instance) => void;
-  /** 弹窗的class类 */
-  className?: string;
   /** 替换当前弹窗 */
   replace?: boolean;
   /**

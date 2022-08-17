@@ -136,7 +136,7 @@ function Popup(_props: PopupInterface) {
   return ReactDom.createPortal(
     _visiblity ? (
       <div
-        className={`${styles['af-modal']} ${(styles as any)[`layer-${props.direction}`]}`}
+        className={`${props.className} ${styles['af-modal']} ${(styles as any)[`layer-${props.direction}`]}`}
         style={{ pointerEvents: props.pointerEvents ? 'none' : 'revert', zIndex: props.zIndex }}
         onClick={() => onCancel()}
         onAnimationEnd={(e) => animationEnd(e)}
