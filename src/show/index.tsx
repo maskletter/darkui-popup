@@ -110,7 +110,7 @@ export function createShow<T = PopupAlterInterface>(
 ) {
   let globalController: ShowController;
   const globalControllerOptions = ControllerOptions || { destory: true };
-  return async (
+  return (
     _props: T & { multiMode?: boolean; onCancel?: any; replace?: boolean; content: any },
     options?: Options,
   ) => {

@@ -31,8 +31,6 @@ abstract class ShowControllerCore {
     if (this.isDestory) {
       this.log('destory');
     }
-    // 因为react 18 版本createRoot异步执行导致初始化时未绑定到控制器事件，所以需要微队列等待
-    await Promise.resolve().then();
     const instance = this.createInstance(props);
     const length = this.lists.push(instance);
     this.onWatch.emit(this.lists[length - 1]);
@@ -42,8 +40,6 @@ abstract class ShowControllerCore {
     if (this.isDestory) {
       this.log('destory');
     }
-    // 因为react 18 版本createRoot异步执行导致初始化时未绑定到控制器事件，所以需要微队列等待
-    await Promise.resolve().then();
     const instance = this.createInstance(props);
     const length = this.lists.length === 0 ? 0 : this.lists.length - 1;
     (this.lists as any)[length] = instance;

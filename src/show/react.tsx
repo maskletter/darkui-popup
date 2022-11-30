@@ -23,6 +23,9 @@ export function CreateRoot(_: ShowPopupProps = {}) {
     };
     useLayoutEffect(() => {
       // 监听控制器事件
+      if (controller?.lists.length) {
+        update(controller?.lists[controller?.lists.length-1])
+      }
       controller?.onWatch.on(update); // = update;
       controller?.onDestory.on(() => {
         instance.current = null;
